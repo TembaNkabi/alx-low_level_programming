@@ -1,4 +1,4 @@
-#include <<stdio.h>
+#include <stdio.h>
 /**
  * main - print all letters in lower case except q and e
  * Return: 0
