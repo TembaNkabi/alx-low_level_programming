@@ -1,61 +1,53 @@
 #include "search_algos.h"
 
 /**
- * recursive_search - searches for a value in an array of
- * integers using the Binary search algorithm
- *
- *
- * @array: input array
- * @size: size of the array
- * @value: value to search in
- * Return: index of the number
- */
-int recursive_search(int *array, size_t size, int value)
-{
-	size_t half = size / 2;
-	size_t i;
+* binary_search - searches for values in a sorted array of integers
+* @array: pointer to the first element
+* @size: number of element in array
+* @value: value to search for
+* Return: index of value or -1 if value not found
+*/
 
-	if (array == NULL || size == 0)
-		return (-1);
-
-	printf("Searching in array");
-
-	for (i = 0; i < size; i++)
-		printf("%s %d", (i == 0) ? ":" : ",", array[i]);
-
-	printf("\n");
-
-	if (half && size % 2 == 0)
-		half--;
-
-	if (value == array[half])
-		return ((int)half);
-
-	if (value < array[half])
-		return (recursive_search(array, half, value));
-
-	half++;
-
-	return (recursive_search(array + half, size - half, value) + half);
-}
-
-/**
- * binary_search - calls to binary_search to return
- * the index of the number
- *
- * @array: input array
- * @size: size of the array
- * @value: value to search in
- * Return: index of the number
- */
 int binary_search(int *array, size_t size, int value)
 {
-	int index;
+	size_t i, mid, high, low = 0;
 
-	index = recursive_search(array, size, value);
-
-	if (index >= 0 && array[index] != value)
+	if (!array || array == NULL)
+	{
 		return (-1);
-
-	return (index);
+	}
+	if (size == 1)
+	{
+		printf("Searching in array: %d\n", array[0]);
+		return (0);
+	}
+	high = size - 1;
+	while (low != high)
+	{
+		mid = (low + high) / 2;
+		printf("Searching in array: ");
+		for (i = low; i < high + 1; i++)
+		{
+			printf("%d", array[i]);
+			if (i < high)
+			{
+				printf(", ");
+			}
+		}
+		printf("\n");
+		if (value == array[mid])
+		{
+			return (mid);
+		}
+		if (value > array[mid])
+		{
+			low = mid + 1;
+		}
+		else if (value < array[mid])
+		{
+			high = mid - 1;
+		}
+	}
+	printf("Searching in array: %d\n", array[low]);
+	return (-1);
 }
